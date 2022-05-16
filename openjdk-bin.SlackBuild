@@ -1,0 +1,102 @@
+#!/bin/sh
+#
+# Slackware build script for OpenJDK from binary archieve
+#
+# Copyright (C) 2022 by Panji Kusuma <epanji@gmail.com>
+#
+# Permission to use, copy, modify, and/or distribute this software for
+# any purpose with or without fee is hereby granted.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+# WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+# AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+# DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+# PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+# TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+# PERFORMANCE OF THIS SOFTWARE.
+
+PRGNAM=openjdk
+VERSION=${VERSION:-17.0.3}
+TEMURIN=${TEMURIN:-7}
+BUILD=${BUILD:-1}
+TAG=${TAG:-_SBo}
+PKGTYPE=${PKGTYPE:-tgz}
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i686 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+CWD=$(pwd)
+TMP=${TMP:-/tmp/SBo}
+PKG=$TMP/package-$PRGNAM
+PREFIX=${PREFIX:-/usr}
+OUTPUT=${OUTPUT:-/tmp}
+
+if [ "$ARCH" = "x86_64" ]; then
+  TEMURIN_ARCH="x64"
+  LIBDIRSUFFIX="64"
+else
+  TEMURIN_ARCH=$ARCH
+  LIBDIRSUFFIX=""
+fi
+
+# OpenJDK17U-jdk_x64_linux_hotspot_17.0.3_7.tar.gz
+SRCNAM=OpenJDK$(cut -d '.' -f 1 <<< $VERSION)U-jdk_$TEMURIN_ARCH\_linux_hotspot_$VERSION\_$TEMURIN.tar.gz
+
+set -e
+
+rm -rf $PKG
+mkdir -p $TMP $OUTPUT $PKG/{install,etc/profile.d,usr/{bin,lib$LIBDIRSUFFIX,doc/$PRGNAM-$VERSION+$TEMURIN,man/man1}}
+
+cd $PKG/$PREFIX/lib$LIBDIRSUFFIX
+tar xvf $CWD/$SRCNAM
+mv jdk-$VERSION+$TEMURIN $PRGNAM-$VERSION+$TEMURIN
+chown -R root:root $PRGNAM-$VERSION+$TEMURIN
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
+  -o -perm 511 \) -exec chmod 755 {} \; -o \
+ \( -perm 666 -o -perm 664 -o -perm 640 -o -perm 600 -o -perm 444 \
+  -o -perm 440 -o -perm 400 \) -exec chmod 644 {} \;
+
+find $PRGNAM-$VERSION+$TEMURIN -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
+  | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
+
+find $PRGNAM-$VERSION+$TEMURIN/man -type f -exec gzip -9q {} \; 2> /dev/null || true
+for i in $(find $PRGNAM-$VERSION+$TEMURIN/man -type l 2> /dev/null); do ln -s $(readlink $i).gz $i.gz ; rm $i ; done
+(cd ../man/man1; find ../../lib$LIBDIRSUFFIX/$PRGNAM-$VERSION+$TEMURIN/man/man1 -type f -exec ln -s {} \;)
+
+(cd ../bin; find ../lib$LIBDIRSUFFIX/$PRGNAM-$VERSION+$TEMURIN/bin -type f -exec ln -s {} \;)
+
+ln -sf $PRGNAM-$VERSION+$TEMURIN/lib/libjawt.so
+ln -sf $PRGNAM-$VERSION+$TEMURIN/lib/server/libjvm.so
+ln -sf $PRGNAM-$VERSION+$TEMURIN/lib/libjava.so
+ln -sf $PRGNAM-$VERSION+$TEMURIN/lib/libawt.so
+ln -sf $PRGNAM-$VERSION+$TEMURIN/lib/libawt_xawt.so
+ln -sf $PRGNAM-$VERSION+$TEMURIN/lib/libjli.so
+
+cd ../doc/$PRGNAM-$VERSION+$TEMURIN
+ln -s ../../lib$LIBDIRSUFFIX/$PRGNAM-$VERSION+$TEMURIN/legal
+ln -s ../../lib$LIBDIRSUFFIX/$PRGNAM-$VERSION+$TEMURIN/release
+cat $CWD/$PRGNAM-bin.SlackBuild > $PRGNAM-bin.SlackBuild
+
+cd $PKG
+cat > etc/profile.d/$PRGNAM.sh << EOF
+#!/bin/sh
+export JAVA_HOME=/usr/lib$LIBDIRSUFFIX/$PRGNAM-$VERSION+$TEMURIN
+EOF
+
+cat > etc/profile.d/$PRGNAM.csh << EOF
+#!/bin/csh
+setenv JAVA_HOME /usr/lib$LIBDIRSUFFIX/$PRGNAM-$VERSION+$TEMURIN
+EOF
+
+chmod 755 etc/profile.d/*
+cat $CWD/slack-desc > install/slack-desc
+
+cd $PKG
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-bin-$VERSION+$TEMURIN-$ARCH-$BUILD$TAG.$PKGTYPE
