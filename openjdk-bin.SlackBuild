@@ -17,8 +17,8 @@
 # PERFORMANCE OF THIS SOFTWARE.
 
 PRGNAM=openjdk
-VERSION=${VERSION:-17.0.8}
-TEMURIN=${TEMURIN:-7}
+VERSION=${VERSION:-21.0.1}
+TEMURIN=${TEMURIN:-12}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-tgz}
@@ -45,7 +45,7 @@ else
   LIBDIRSUFFIX=""
 fi
 
-# OpenJDK17U-jdk_x64_linux_hotspot_17.0.3_7.tar.gz
+# OpenJDK21U-jdk_x64_linux_hotspot_21.0.1_12.tar.gz
 SRCNAM=OpenJDK$(cut -d '.' -f 1 <<< $VERSION)U-jdk_$TEMURIN_ARCH\_linux_hotspot_$VERSION\_$TEMURIN.tar.gz
 
 set -e

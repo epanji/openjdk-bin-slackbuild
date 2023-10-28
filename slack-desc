@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
          |-----handy-ruler------------------------------------------------------|
-OpenJDK17: OpenJDK17 (open implementation of JDK 17 LTS)
-OpenJDK17:
-OpenJDK17: OpenJDK17 is an open source implementation of version 17 (LTS) of
-OpenJDK17: the Java Development Kit, Standard Edition. It includes tools for
-OpenJDK17: developing, testing, and running programs written in Java.
-OpenJDK17:
-OpenJDK17: Temurin is Prebuilt OpenJDK Binaries for Free!
-OpenJDK17:
-OpenJDK17: homepage: https://OpenJDK.java.net/
-OpenJDK17: homepage: https://adoptium.net/
-OpenJDK17:
+OpenJDK21: OpenJDK21 (open implementation of JDK 21 LTS)
+OpenJDK21:
+OpenJDK21: OpenJDK21 is an open source implementation of version 21 (LTS) of
+OpenJDK21: the Java Development Kit, Standard Edition. It includes tools for
+OpenJDK21: developing, testing, and running programs written in Java.
+OpenJDK21:
+OpenJDK21: Temurin is Prebuilt OpenJDK Binaries for Free!
+OpenJDK21:
+OpenJDK21: homepage: https://OpenJDK.java.net/
+OpenJDK21: homepage: https://adoptium.net/
+OpenJDK21:
