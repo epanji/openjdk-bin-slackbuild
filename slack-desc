@@ -6,14 +6,14 @@
 # customary to leave one space after the ':' except on otherwise blank lines.
 
          |-----handy-ruler------------------------------------------------------|
-OpenJDK21: OpenJDK21 (open implementation of JDK 21 LTS)
-OpenJDK21:
-OpenJDK21: OpenJDK21 is an open source implementation of version 21 (LTS) of
-OpenJDK21: the Java Development Kit, Standard Edition. It includes tools for
-OpenJDK21: developing, testing, and running programs written in Java.
-OpenJDK21:
-OpenJDK21: Temurin is Prebuilt OpenJDK Binaries for Free!
-OpenJDK21:
-OpenJDK21: homepage: https://OpenJDK.java.net/
-OpenJDK21: homepage: https://adoptium.net/
-OpenJDK21:
+OpenJDK25: OpenJDK25 (open implementation of JDK 25 LTS)
+OpenJDK25:
+OpenJDK25: OpenJDK25 is an open source implementation of version 25 (LTS) of
+OpenJDK25: the Java Development Kit, Standard Edition. It includes tools for
+OpenJDK25: developing, testing, and running programs written in Java.
+OpenJDK25:
+OpenJDK25: Temurin is Prebuilt OpenJDK Binaries for Free!
+OpenJDK25:
+OpenJDK25: homepage: https://OpenJDK.java.net/
+OpenJDK25: homepage: https://adoptium.net/
+OpenJDK25:
