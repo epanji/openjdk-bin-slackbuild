@@ -17,8 +17,8 @@
 # PERFORMANCE OF THIS SOFTWARE.
 
 PRGNAM=openjdk
-VERSION=${VERSION:-25.0.0}
-TEMURIN=${TEMURIN:-36}
+VERSION=${VERSION:-25.0.1}
+TEMURIN=${TEMURIN:-8}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-txz}
@@ -46,7 +46,7 @@ else
 fi
 
 # OpenJDK25U-jdk_x64_linux_hotspot_25_36.tar.gz
-SRCNAM=OpenJDK${VERSION:0:2}U-${PRGNAM:4}_$TEMURIN_ARCH\_linux_hotspot_${VERSION:0:2}\_$TEMURIN.tar.gz
+SRCNAM=OpenJDK${VERSION:0:2}U-${PRGNAM:4}_$TEMURIN_ARCH\_linux_hotspot_$VERSION\_$TEMURIN.tar.gz
 
 set -e
 
@@ -55,7 +55,7 @@ mkdir -p $TMP $OUTPUT $PKG/{install,etc/profile.d,usr/{bin,lib$LIBDIRSUFFIX,doc/
 
 cd $PKG/$PREFIX/lib$LIBDIRSUFFIX
 tar xvf $CWD/$SRCNAM
-mv ${PRGNAM:4}-${VERSION:0:2}+$TEMURIN $PRGNAM-$VERSION+$TEMURIN
+mv ${PRGNAM:4}-$VERSION+$TEMURIN $PRGNAM-$VERSION+$TEMURIN
 chown -R root:root $PRGNAM-$VERSION+$TEMURIN
 find -L . \
  \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 \
